@@ -1,4 +1,5 @@
 import psycopg2
+from psycopg2 import OperationalError
 class DatabaseManager:
     def __init__(self, user, password, host, port, database):
         self.user = user
@@ -72,3 +73,13 @@ class DatabaseManager:
         self.cursor.execute(query, (user_id, game_id))
         count = self.cursor.fetchone()[0]
         return count > 0
+    def select_from_table(self, table_name):
+        try:
+            query = f"SELECT * FROM {table_name}"
+            self.cursor.execute(query)
+            self.connection.commit()
+            rows = self.cursor.fetchall()
+            return rows
+        except (Exception, psycopg2.Error) as error:
+            print("Failed to execute query:", error)
+            return None
