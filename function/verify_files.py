@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import hashlib
 import os
-from database_manager import DatabaseManager
+from function.database_manager import DatabaseManager
 load_dotenv()
 db_manager = DatabaseManager(
     user=os.getenv("DB_USER"),
