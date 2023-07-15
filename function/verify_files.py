@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import hashlib
 import os
-from function.database_manager import DatabaseManager
+from database_manager import DatabaseManager
 load_dotenv()
 db_manager = DatabaseManager(
     user=os.getenv("DB_USER"),
@@ -41,7 +41,7 @@ def verify_hash_file(path, db_manager):
             if actual_hash != old_hash[0][0]:
                 print(f"El archivo '{path}' ha sido modificado.")
         else:
-            raise ValueError(f"La dirección del archivo '{path}' no es válida.")
+            raise ValueError(f"La dirección '{path}' no es válida.")
     except Exception as error:
         print(f"Error al verificar el archivo '{path}': {error}")
 
@@ -55,7 +55,7 @@ def save_hash_to_database(db_manager):
     try:
         values = []
         file_paths = []
-        query_insert = "INSERT INTO public.hash_record (file_name, hash_value) VALUES (%s, %s);"
+        query_insert = "INSERT INTO public.hash_record (file_path, hash_value) VALUES (%s, %s);"
         file_paths = get_files('/bin')
         for path in file_paths:
             file_hash = generate_file_hash(path)
@@ -66,6 +66,6 @@ def save_hash_to_database(db_manager):
 
 # Código de ejemplo para ejecutar las funciones
 db_manager.connect()
-save_hash_to_database(db_manager)
+# save_hash_to_database(db_manager)
 verify_hash_file('/home/danusita/prueba/prueba.txt', db_manager)
 db_manager.disconnect()
