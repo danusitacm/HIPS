@@ -4,6 +4,7 @@ import os
 from database_manager import DatabaseManager
 import logs
 load_dotenv()
+
 db_manager = DatabaseManager(
     user=os.getenv("DB_USER"),
     password=os.getenv("DB_PASSWORD"),
