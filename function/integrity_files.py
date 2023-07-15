@@ -41,6 +41,7 @@ def verify_hash_file(path, db_manager):
             old_hash = db_manager.select_from_table(query_select)
             if actual_hash != old_hash[0][0]:
                 print(f"El archivo '{path}' ha sido modificado.")
+                logs.log_alarm(f"Archivo modificado","",f"El archivo '{path}' ha sido modificado, el hash actual no coincide con el antiguo.")
         else:
             raise ValueError(f"La dirección '{path}' no es válida.")
     except Exception as error:
