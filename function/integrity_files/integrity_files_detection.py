@@ -1,19 +1,7 @@
-from dotenv import load_dotenv
-import hashlib
-import os
-from database_manager import DatabaseManager
-import logs
-load_dotenv()
-
-db_manager = DatabaseManager(
-    user=os.getenv("DB_USER"),
-    password=os.getenv("DB_PASSWORD"),
-    host=os.getenv("DB_HOST"),
-    port=os.getenv("DB_PORT"),
-    database=os.getenv("DB_NAME")
-    )
+from utils import *
 
 def get_files(path):
+    # Obtener una lista de todos los archivos del bin
     try:
         file_paths = []
         for root, dirs, files in os.walk(path, topdown=False):
@@ -25,16 +13,8 @@ def get_files(path):
     except Exception as error:
         print(f"Error al obtener los archivos del directorio '{path}': {error}")
 
-def generate_file_hash(file_path):
-    try:
-        with open(os.path.abspath(file_path), 'rb') as f:
-            data = f.read()
-            hashed_string = hashlib.sha256(data).hexdigest()
-        return hashed_string
-    except Exception as error:
-        print(f"Error al calcular el hash del archivo '{file_path}': {error}")
-
 def verify_hash_file(path, db_manager):
+    # Verifica los hash de un archivo determinado
     try:
         query_select = f"SELECT hash_value FROM hash_record WHERE file_name='{path}'"
         if os.path.exists(path):
