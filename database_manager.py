@@ -73,9 +73,8 @@ class DatabaseManager:
         self.cursor.execute(query, (user_id, game_id))
         count = self.cursor.fetchone()[0]
         return count > 0
-    def select_from_table(self, table_name):
+    def select_from_table(self,query):
         try:
-            query = f"SELECT * FROM {table_name}"
             self.cursor.execute(query)
             self.connection.commit()
             rows = self.cursor.fetchall()
