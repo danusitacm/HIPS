@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import hashlib
 import os
 from database_manager import DatabaseManager
+import logs
 load_dotenv()
 db_manager = DatabaseManager(
     user=os.getenv("DB_USER"),
@@ -10,6 +11,7 @@ db_manager = DatabaseManager(
     port=os.getenv("DB_PORT"),
     database=os.getenv("DB_NAME")
     )
+
 def get_files(path):
     try:
         file_paths = []
@@ -32,7 +34,6 @@ def generate_file_hash(file_path):
         print(f"Error al calcular el hash del archivo '{file_path}': {error}")
 
 def verify_hash_file(path, db_manager):
-    
     try:
         query_select = f"SELECT hash_value FROM hash_record WHERE file_name='{path}'"
         if os.path.exists(path):
@@ -44,12 +45,6 @@ def verify_hash_file(path, db_manager):
             raise ValueError(f"La dirección '{path}' no es válida.")
     except Exception as error:
         print(f"Error al verificar el archivo '{path}': {error}")
-
-def verify_hash_files(db_manager):
-    try:
-       pass
-    except Exception as error:
-        print(f"Error al verificar el archivo : {error}")
 
 def save_hash_to_database(db_manager):
     try:
