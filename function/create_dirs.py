@@ -26,6 +26,8 @@ run_command(["chmod", "700","/hips"])
 run_command(["mkdir","/hips/backup"])
 run_command(["chmod", "700","/hips/backup"])
 
+run_command(["mkdir","/hips/backup/system_file"])
+run_command(["mkdir","/hips/backup/binary_file"])
 # Para la cuarentena 
 run_command(["mkdir","/hips/cuarentena"])
 run_command(["chmod", "700","/hips/cuarentena"])
