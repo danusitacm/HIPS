@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2 import OperationalError
+
 class DatabaseManager:
     def __init__(self, user, password, host, port, database):
         self.user = user

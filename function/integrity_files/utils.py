@@ -1,11 +1,9 @@
 from dotenv import load_dotenv
 import hashlib
 import os
-from database_manager import DatabaseManager
-import logs
-
+from database_manager import *
+from logs import *
 load_dotenv()
-
 db_manager = DatabaseManager(
     user=os.getenv("DB_USER"),
     password=os.getenv("DB_PASSWORD"),
@@ -13,7 +11,6 @@ db_manager = DatabaseManager(
     port=os.getenv("DB_PORT"),
     database=os.getenv("DB_NAME")
     )
-
 def get_files(path):
     # Obtener una lista de todos los archivos del bin
     try:

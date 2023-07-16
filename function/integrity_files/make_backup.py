@@ -1,5 +1,4 @@
 from utils import *
-import os
 import shutil
 
 def make_backup(source_files, destination_folder):
