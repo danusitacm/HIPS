@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import hashlib
 import os
 from database_manager import DatabaseManager
-from function.logs import *
+from logs import *
 load_dotenv()
 
 db_manager = DatabaseManager(
