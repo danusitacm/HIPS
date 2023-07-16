@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Usuarios Conectados{% endblock %}
+
+{% block content %}
+    <h1>Usuarios Conectados</h1>
+    <pre>
+        {{ connected_users_output | safe }}
+    </pre>
+{% endblock %}
