@@ -36,12 +36,12 @@ def restore_backup_system_files(source_files, destination_folder):
         print(f"Error al restaurar el backup de los archivos del sistema: {error}")
         
 
-""" source_files=get_files('/bin')
+source_files=get_files('/bin')
 destination_folder = "/hips/backup/binary_files"
-make_backup_binary_files(source_files, destination_folder) """
-""" source_files=["/etc/passwd","/etc/shadow"]
+make_backup_binary_files(source_files, destination_folder)
+source_files=["/etc/passwd","/etc/shadow"]
 destination_folder = "/hips/backup/system_file"
-make_backup_system_files(source_files, destination_folder) """
+make_backup_system_files(source_files, destination_folder)
 source_files=get_files("/hips/backup/system_files/")
 destination_folder = "/etc"
 restore_backup_system_files(source_files,destination_folder)
