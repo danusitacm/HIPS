@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
 import hashlib
 import os
-from database_manager import DatabaseManager
-from logs import *
+from function.database_manager import DatabaseManager
+from function.logs import *
 load_dotenv()
 
 db_manager = DatabaseManager(
