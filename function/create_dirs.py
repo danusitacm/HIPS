@@ -6,7 +6,6 @@ def run_command(command):
     except subprocess.CalledProcessError as e:
         print(f"Error al ejecutar el comando {command}: {e}")
 
-
 # Bitacoras del sistema
 # Directorio del Hips
 run_command(["mkdir","/var/log/hips"])
