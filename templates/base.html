@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Título de la página{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div id="header">
+        <h1>Mi Proyecto HIPS</h1>
+    </div>
+
+    <div id="content">
+        {% block content %}
+        <!-- Contenido específico de cada página se insertará aquí -->
+        {% endblock %}
+    </div>
+
+    <div id="footer">
+        <p>Pie de página - Derechos reservados © {{ year }}</p>
+    </div>
+</body>
+</html>
