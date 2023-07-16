@@ -14,6 +14,19 @@ db_manager = DatabaseManager(
     database=os.getenv("DB_NAME")
     )
 
+def get_files(path):
+    # Obtener una lista de todos los archivos del bin
+    try:
+        file_paths = []
+        for root, dirs, files in os.walk(path, topdown=False):
+            for name in files:
+                file_paths.append(os.path.join(root, name))
+        file_paths.append("/etc/shadow")
+        file_paths.append("/etc/passwd")
+        return file_paths
+    except Exception as error:
+        print(f"Error al obtener los archivos del directorio '{path}': {error}")
+
 def generate_file_hash(file_path):
     try:
         with open(os.path.abspath(file_path), 'rb') as f:
