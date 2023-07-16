@@ -7,6 +7,7 @@ def run_command(command):
     except subprocess.CalledProcessError as e:
         print(f"Error al ejecutar el comando {command}: {e}")
 
+
 # Bitacoras del sistema
 # Directorio del Hips
 run_command(["mkdir","/var/log/hips"])
@@ -17,6 +18,10 @@ run_command(["touch", "/var/log/hips/alarmas.log"])
 run_command(["chmod", "700","/var/log/hips/alarmas.log" ])
 run_command(["touch", "/var/log/hips/prevencion.log"])
 run_command(["chmod", "700","/var/log/hips/prevencion.log" ])
+
+# Por el momento la carpeta del hips
+run_command(["mkdir","/hips"])
+run_command(["chmod", "700","/hips"])
 
 # Para el backup
 run_command(["mkdir","/hips/backup"])
