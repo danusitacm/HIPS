@@ -17,3 +17,11 @@ run_command(["touch", "/var/log/hips/alarmas.log"])
 run_command(["chmod", "700","/var/log/hips/alarmas.log" ])
 run_command(["touch", "/var/log/hips/prevencion.log"])
 run_command(["chmod", "700","/var/log/hips/prevencion.log" ])
+
+# Para el backup
+run_command(["mkdir","/hips/backup"])
+run_command(["chmod", "700","/hips/backup"])
+
+# Para la cuarentena 
+run_command(["mkdir","/hips/cuarentena"])
+run_command(["chmod", "700","/hips/cuarentena"])
