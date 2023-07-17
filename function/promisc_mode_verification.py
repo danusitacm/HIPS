@@ -1,7 +1,6 @@
 import os 
 import subprocess
 import re
-# Comandos para ver si alguna intefaz entro en modo promiscuo
 def search_string_in_file(file_path, search_string):
     matching_lines = []
     try:
