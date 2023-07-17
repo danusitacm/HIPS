@@ -19,7 +19,9 @@ def extract_interface(log_line):
         interface_name = match.group(1)
     return interface_name
 
-def check_system_log_files():
+def check_promiscuos_mode():
+    # Se verifica si el dispositivo esta en modo promiscuo con los archivos de auditoria
+    # Y con el resultado de ip a 
     try:
         file_path_centOS="/var/log/messages"
         file_path_ubuntu ="/var/log/syslog"
@@ -45,4 +47,4 @@ def check_net_interface(interface_name):
     else:
         return 0
 
-check_system_log_files()
+check_promiscuos_mode()
