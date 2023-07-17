@@ -22,7 +22,6 @@ def get_sniffer_processes(tool_name):
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, text=True)
         output = process.communicate()[0].split("\n")
         output.pop()
-        print(output)
         return output
     except Exception as error:
         print("Error al ejecutar el comando ps: ", error)
@@ -36,7 +35,7 @@ def check_sniffer():
                     process = process.split()
                     logs.log_alarm("Sniffer activado","",f"El proceso {process[1]} fue activado por el user {process[0]}")
                     subprocess.run(f"kill -9 {process[1]}", shell=True)
-                    logs.log_prevention("Proceso desactivado","",f"El proceso {process[1]} fue desactivado por medida de seguridad.")
+                    logs.log_prevention("Proceso desactivado","",f"El proceso {process[1]} se encuentra en la lista negra, fue desactivado por esta razon.")
     except Exception as error:
         print("No se puede verificar si hay un sniffer: ", error)
 

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 def log_alarm(type_alarm,destination_ip, description):
     file_path = "/var/log/hips/alarmas.log"
