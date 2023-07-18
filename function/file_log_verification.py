@@ -4,13 +4,9 @@ from utils import write_to_file,execute_process,file_to_list
 import string
 import random
 import os
-ip_white_list=["192.168.0.15","192.168.0.14"]
-user_count_login = {}
-user_count_su = {}
-def generate_random_password(length=12):
-    characters = string.ascii_letters + string.digits + string.punctuation
-    password = ''.join(random.choice(characters) for _ in range(length))
-    return password
+ip_white_list=["192.168.0.15"]
+
+
 
 def get_dict(log):
     log=log.split()
@@ -34,7 +30,7 @@ def sshd_auth(dic_log):
     except Exception as error:
         print(error)
 
-def login_auth(dic_log):
+def login_auth(dic_log,user_count_login):
     try: 
         user = dic_log['user']
         user_count_login[user] = user_count_login.get(user, 0) + 1
@@ -46,11 +42,11 @@ def login_auth(dic_log):
             os.system(f"sudo usermod -L {user}")
             print(f"Se bloqueo el usuario {user}. Comunicarse con admin para desbloquear el user")
             logs.log_prevention(f"Autenticacion fallida MASIVA","",f"Se bloqueo el usuario {user} al llegar a la cantidad maximas de intentos")
+        return user_count_login
     except Exception as e:
-      print(e)
-    pass
+        print(e)
 
-def su_auth(dic_log):
+def su_auth(dic_log,user_count_su):
     try:
         ruser=dic_log['ruser']
         user_count_su[ruser] = user_count_su.get(ruser, 0) + 1
@@ -62,25 +58,29 @@ def su_auth(dic_log):
             os.system(f"sudo usermod -L {ruser}")
             print(f"Se bloqueo el usuario {ruser}. Comunicarse con admin para desbloquear el user")
             logs.log_prevention(f"Autenticacion fallida MASIVA","",f"Se bloqueo el usuario {ruser} al llegar a la cantidad maximas de intentos")
+        return user_count_su
     except Exception as e:
-      print(e)
-    pass 
+        print(e)
 
 def check_authentication_failure():
-    command_auth="cat /var/log/secure | grep -i \":auth\" |grep -i \"authentication failure\" "
-    output=execute_process(command_auth)
-    for log in output:
-        if "sshd:auth" in log:
-            #sshd_auth(get_dict(log))
-            pass
-        elif "login:auth" in log:
-            print("Autenticacion en login")
-            login_auth(get_dict(log))
-            pass
-        elif "su-l:auth" in log:
-            print("Autenticacion en su")
-            su_auth(get_dict(log))
-    pass
+    try:
+        user_count_login = {}
+        user_count_su = {}
+        command_auth="cat /var/log/secure | grep -i \":auth\" |grep -i \"authentication failure\" "
+        output=execute_process(command_auth)
+        for log in output:
+            if "sshd:auth" in log:
+                print("Auth sshd")
+                sshd_auth(get_dict(log),)
+            elif "login:auth" in log:
+                print("Auth login")
+                user_count_login=login_auth(get_dict(log),user_count_login)
+            elif "su-l:auth" in log:
+                print("Auth su")
+                user_count_su=su_auth(get_dict(log),user_count_su)
+    except Exception as error:
+      print('Error al verificar el /var/log/secure',error)
+    
 
 def check_access_httpd_error():
     pass
