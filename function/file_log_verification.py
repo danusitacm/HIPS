@@ -4,9 +4,11 @@ from utils import write_to_file,execute_process,file_to_list
 import string
 import random
 import os
-ip_white_list=["192.168.0.15"]
+path_hosts_allow="/etc/hosts.allow"
+path_hots_deny="etc/hosts.deny"
 
-
+path_hosts_allow=file_to_list(path_hosts_allow)
+path_hots_deny=file_to_list(path_hots_deny)
 
 def get_dict(log):
     log=log.split()
