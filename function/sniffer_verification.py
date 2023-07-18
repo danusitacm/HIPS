@@ -18,7 +18,7 @@ Agregar una lista de usuarios y si el usuario ejecuto ese comando enviarlo a la 
 def get_sniffer_processes(tool_name):
     try:
         string='{print $1" "$2" "$11""$12}'
-        command = f"sudo ps -ua | grep tcpdump | grep -v grep | awk '{string}'"
+        command = f"sudo ps -uax | grep tcpdump | grep -v grep | awk '{string}'"
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, text=True)
         output = process.communicate()[0].split("\n")
         output.pop()
