@@ -1,17 +1,7 @@
-from dotenv import load_dotenv
 import hashlib
 import os
-from  database_manager import *
 from  logs import *
-load_dotenv()
-
-db_manager = DatabaseManager(
-    user=os.getenv("DB_USER"),
-    password=os.getenv("DB_PASSWORD"),
-    host=os.getenv("DB_HOST"),
-    port=os.getenv("DB_PORT"),
-    database=os.getenv("DB_NAME")
-    )
+import subprocess
 
 def get_files(path):
     # Obtener una lista de todos los archivos del bin
@@ -32,3 +22,28 @@ def generate_file_hash(file_path):
         return hashed_string
     except Exception as error:
         print(f"Error al calcular el hash del archivo '{file_path}': {error}")
+        
+def write_to_file(file_path, text):
+    try:
+        with open(file_path, 'w') as file:
+            file.write(text)
+        print(f"Text successfully written to {file_path}.")
+    except Exception as e:
+        print(f"Error writing to the file: {e}")
+    
+def execute_process(command):
+    p=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,text=True,stderr=subprocess.PIPE)
+    output, outerr =p.communicate()
+    print(outerr)
+    output=output.split("\n")
+    output.pop()
+    return output
+
+def file_to_list(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+        return lines
+    except Exception as e:
+        print(f"Error reading the file: {e}")
+        return []

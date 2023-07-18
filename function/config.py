@@ -22,6 +22,8 @@ run_command(["chmod", "700","/var/log/hips/prevencion.log" ])
 run_command(["mkdir","/hips"])
 run_command(["chmod", "700","/hips"])
 
+run_command(["touch","/hips/ip_detected"])
+run_command(["chmod", "700","/hips/ip_detected"]) 
 # Para el backup
 run_command(["mkdir","/hips/backup"])
 run_command(["chmod", "700","/hips/backup"])

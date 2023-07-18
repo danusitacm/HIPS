@@ -1,5 +1,6 @@
 import subprocess
 import logs
+from utils import write_to_file,execute_process,file_to_list
 ip_white_list=["192.168.0.15","192.168.0.14"]
 def get_dict(log):
     log=log.split()
@@ -15,14 +16,13 @@ def get_dict(log):
             if key in word:
                 log_result[key]=word.split("=")[1]           
     return log_result  
-
 def check_failed_password_ssh():
     p=subprocess.Popen("grep")
     pass
 
 def sshd_auth(dic_log):
     try:
-        if not (dic_log["rhost"] in ip_white_list ):         
+        if (not (dic_log["rhost"] in ip_white_list )):         
             logs.log_alarm("Ip intruso","","Se ha detectado un ip intruso "+dic_log["rhost"]+", tratando de ingresar como "+dic_log["user"]+".")   
     except Exception as error:
         print(error)
@@ -37,9 +37,7 @@ def su_auth(dic_log):
 
 def check_authentication_failure():
     command_auth="cat /var/log/secure | grep -i \":auth\" |grep -i \"authentication failure\" "
-    p=subprocess.Popen(command_auth,shell=True,stdout=subprocess.PIPE,text=True)
-    output=p.communicate()[0].split("\n")
-    output.pop()
+    output=execute_process(command_auth)
     for log in output:
         if "sshd:auth" in log:
             print("Autenticacion en ssh")
