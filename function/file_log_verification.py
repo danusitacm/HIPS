@@ -1,7 +1,17 @@
 import subprocess
 import logs
 from utils import write_to_file,execute_process,file_to_list
+import string
+import random
+import os
 ip_white_list=["192.168.0.15","192.168.0.14"]
+user_count_login = {}
+user_count_su = {}
+def generate_random_password(length=12):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = ''.join(random.choice(characters) for _ in range(length))
+    return password
+
 def get_dict(log):
     log=log.split()
     log_result={
@@ -16,9 +26,6 @@ def get_dict(log):
             if key in word:
                 log_result[key]=word.split("=")[1]           
     return log_result  
-def check_failed_password_ssh():
-    p=subprocess.Popen("grep")
-    pass
 
 def sshd_auth(dic_log):
     try:
@@ -28,11 +35,35 @@ def sshd_auth(dic_log):
         print(error)
 
 def login_auth(dic_log):
-    
+    try: 
+        user = dic_log['user']
+        user_count_login[user] = user_count_login.get(user, 0) + 1
+        if(user_count_login[user]>=3):
+            logs.log_alarm(f"Autenticacion fallida","",f"Se itento acceder "+ str(user_count_login[user])+f" veces en el user: { user }")
+            print(f"Autenticacion fallida","",f"Se itento acceder "+ str(user_count_login[user])+f" veces en el user: { user }")
+            print("Al 5to intento se bloqueara el usuario")
+        elif(user_count_login[user]==5):
+            os.system(f"sudo usermod -L {user}")
+            print(f"Se bloqueo el usuario {user}. Comunicarse con admin para desbloquear el user")
+            logs.log_prevention(f"Autenticacion fallida MASIVA","",f"Se bloqueo el usuario {user} al llegar a la cantidad maximas de intentos")
+    except Exception as e:
+      print(e)
     pass
 
 def su_auth(dic_log):
-    
+    try:
+        ruser=dic_log['ruser']
+        user_count_su[ruser] = user_count_su.get(ruser, 0) + 1
+        if(user_count_su[ruser]>=3):
+            logs.log_alarm(f"Autenticacion fallida","",f"Se detecto que el user { ruser } intento acceder "+ str(user_count_su[ruser])+" veces en otro usuario")
+            print(f"Autenticacion fallida","",f"Se detecto que el user { ruser } intento acceder "+ str(user_count_su[ruser])+" veces en otro usuario")
+            print("Al 5to intento se bloqueara el usuario")
+        elif(user_count_su[ruser]==5):
+            os.system(f"sudo usermod -L {ruser}")
+            print(f"Se bloqueo el usuario {ruser}. Comunicarse con admin para desbloquear el user")
+            logs.log_prevention(f"Autenticacion fallida MASIVA","",f"Se bloqueo el usuario {ruser} al llegar a la cantidad maximas de intentos")
+    except Exception as e:
+      print(e)
     pass 
 
 def check_authentication_failure():
@@ -40,11 +71,12 @@ def check_authentication_failure():
     output=execute_process(command_auth)
     for log in output:
         if "sshd:auth" in log:
-            print("Autenticacion en ssh")
-            sshd_auth(get_dict(log))
+            #sshd_auth(get_dict(log))
+            pass
         elif "login:auth" in log:
             print("Autenticacion en login")
             login_auth(get_dict(log))
+            pass
         elif "su-l:auth" in log:
             print("Autenticacion en su")
             su_auth(get_dict(log))
