@@ -1,35 +1,19 @@
 import subprocess
-
-def run_command(command):
+from pathlib import Path
+import os
+def create_files(path_list):
     try:
-        subprocess.run(command, capture_output=True, text=True, check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Error al ejecutar el comando {command}: {e}")
+        for path in path_list:
+            if not os.path.exists(path):
+                subprocess.run(["mkdir","path"])
+            else:
+                print(f"El archivo {path} ya fue creado.")
+    except Exception as error:
+        print(f"Error al crear el archivo: {error}")
 
-# Bitacoras del sistema
-# Directorio del Hips
-run_command(["mkdir","/var/log/hips"])
-run_command(["chmod", "700","/var/log/hips"])
+path_list_log=["/var/log/hips","/var/log/hips/alarmas.log"]
+path_list_hips=["/hips","/hips/ip_detected","/var/log/hips","/hips/backup","/hips/backup/system_file","/hips/backup/binary_file","/hips/cuarentena"]
 
-# Para alarmas y prevencion
-run_command(["touch", "/var/log/hips/alarmas.log"])
-run_command(["chmod", "700","/var/log/hips/alarmas.log" ])
+create_files(path_list_log)
+create_files(path_list_hips)
 
-run_command(["touch", "/var/log/hips/prevencion.log"])
-run_command(["chmod", "700","/var/log/hips/prevencion.log" ])
-
-# Por el momento la carpeta del hips
-run_command(["mkdir","/hips"])
-run_command(["chmod", "700","/hips"])
-
-run_command(["touch","/hips/ip_detected"])
-run_command(["chmod", "700","/hips/ip_detected"]) 
-# Para el backup
-run_command(["mkdir","/hips/backup"])
-run_command(["chmod", "700","/hips/backup"])
-
-run_command(["mkdir","/hips/backup/system_file"])
-run_command(["mkdir","/hips/backup/binary_file"])
-# Para la cuarentena 
-run_command(["mkdir","/hips/cuarentena"])
-run_command(["chmod", "700","/hips/cuarentena"])
