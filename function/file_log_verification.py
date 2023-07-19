@@ -1,8 +1,5 @@
-import subprocess
 import logs
 from utils import write_to_file,execute_process,file_to_list
-import string
-import random
 import os
 path_hosts_allow="/etc/hosts.allow"
 path_hots_deny="etc/hosts.deny"
@@ -27,8 +24,9 @@ def get_dict(log):
 
 def sshd_auth(dic_log):
     try:
-        if (not (dic_log["rhost"] in ip_white_list )):         
-            logs.log_alarm("Ip intruso","","Se ha detectado un ip intruso "+dic_log["rhost"]+", tratando de ingresar como "+dic_log["user"]+".")   
+        pass
+        # if (not (dic_log["rhost"] in ip_white_list )):         
+        #     logs.log_alarm("Ip intruso","","Se ha detectado un ip intruso "+dic_log["rhost"]+", tratando de ingresar como "+dic_log["user"]+".")   
     except Exception as error:
         print(error)
 
