@@ -3,8 +3,6 @@ import shutil
 
 def make_backup_binary_files(source_files, destination_folder):
     try:
-        
-        print(source_files)
         for file_path in source_files:
             if not os.path.exists(file_path):
                 shutil.copy(file_path, destination_folder)
@@ -42,6 +40,8 @@ make_backup_binary_files(source_files, destination_folder)
 source_files=["/etc/passwd","/etc/shadow"]
 destination_folder = "/hips/backup/system_file"
 make_backup_system_files(source_files, destination_folder)
-source_files=get_files("/hips/backup/system_files/")
+
+"""source_files=get_files("/hips/backup/system_files/")
 destination_folder = "/etc"
-restore_backup_system_files(source_files,destination_folder)
+restore_backup_system_files(source_files,destination_folder)"""
+
