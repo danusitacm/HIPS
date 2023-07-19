@@ -1,16 +1,7 @@
 import subprocess
 import re
 import logs
-def search_string_in_file(file_path, search_string):
-    matching_lines = []
-    try:
-        with open(file_path, 'r') as file:
-            for line in file:
-                if search_string in line.lower():
-                    matching_lines.append(line.strip())
-        return matching_lines
-    except Exception as error:
-        print("Ocurrió un error al leer el archivo: ",error) 
+from utils import search_string_in_file
 
 def extract_interface(log_line):
     pattern = r'device (\w+) entered promiscuous mode'
@@ -23,14 +14,13 @@ def check_promiscuos_mode():
     # Se verifica si el dispositivo esta en modo promiscuo con los archivos de auditoria
     # Y con el resultado de ip a 
     try:
-        file_path_centOS="/var/log/messages"
-        file_path_ubuntu ="/var/log/syslog"
+        file_path="/var/log/messages"
         string ="entered promiscuous mode"
-        log_lines=search_string_in_file(file_path_ubuntu,string)
+        log_lines=search_string_in_file(file_path,string)
         for line in log_lines:
             interface_name=extract_interface(line)
             if(check_net_interface(interface_name)):
-                logs.log_alarm(f"Interfaz modo promiscuo","","La interface {interface_name} se encuentra en modo promiscuo.")
+                logs.log_alarm("Interfaz modo promiscuo","",f"La interface {interface_name} se encuentra en modo promiscuo.")
                 subprocess.run(f"ifconfig {interface_name} -promisc", shell=True, check=True)
                 logs.log_prevention("Modo promiscuo desactivado","",f"Se desactivo la interfaz {interface_name} del modo promiscuo por medida de seguridad.")     
     except Exception as error:

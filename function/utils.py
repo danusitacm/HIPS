@@ -47,3 +47,14 @@ def file_to_list(file_path):
     except Exception as e:
         print(f"Error reading the file: {e}")
         return []
+    
+def search_string_in_file(file_path, search_string):
+    matching_lines = []
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                if search_string in line.lower():
+                    matching_lines.append(line.strip())
+        return matching_lines
+    except Exception as error:
+        print("Ocurrió un error al leer el archivo: ",error) 
