@@ -3,19 +3,23 @@ import logs
 import subprocess
 import os
 def check_ps():
-    command="ps x | grep /tmp/ | grep -v grep | awk '{print $1\" \"$5\"\"$6}'"
-    process_list=execute_process(command)
-    if process_list:
-        for process in process_list:
-            process=process.split()
-            print("Se detecto un processo ejecutandose desde /tmp.")
-            kill_process(process)
-            print("Se mato el proceso.")
-            if (os.path.isfile(process[1])):
-                subprocess.run(f"mv {process[1]} /hips/cuarentena",shell=True)
-                print("Se puso en cuarentena el archivo que ejecutaba el proceso.")
-    else:
-        print("No se encontro proceso ejecutanse desde /tmp")
+    try:
+        command="ps x | grep /tmp/ | grep -v grep | awk '{print $1\" \"$5\"\"$6}'"
+        process_list=execute_process(command)
+        if process_list:
+            for process in process_list:
+                process=process.split()
+                print("Se detecto un processo ejecutandose desde /tmp.")
+                kill_process(process)
+                print("Se mato el proceso.")
+                if (os.path.isfile(process[1])):
+                    subprocess.run(f"mv {process[1]} /hips/cuarentena",shell=True)
+                    print("Se puso en cuarentena el archivo que ejecutaba el proceso.")
+        else:
+            print("No se encontro proceso ejecutanse desde /tmp")
+    except Exception as error:
+        print("Error al verificar si hay un proceso ejecutandose desde /tmp",error)
+    
 def check_tmp_extension():
     try:
         extension_list=[".cpp", ".c", ".exe", ".sh", ".php", ".py"]
@@ -41,10 +45,10 @@ def check_tmp_script():
             for file in file_list:
                 if(search_string_in_file(f"{file}","#!")):
                     print(f"Se encontro que en el archivo {file} con la linea inicial #!.")
-                    subprocess.run(f"mv {os.path.abspath(file)} /hips/cuarentena",shell=True)
+                    #subprocess.run(f"mv {os.path.abspath(file)} /hips/cuarentena",shell=True)
                     print("Se puso el archivo en cuarentena, un script no puede estar en /tmp")
     except:
-        print('An exception occurred')
+        print('Error al verificar si un archivo es un script.')
 #check_ps()
 #check_tmp_extension()
 check_tmp_script()
