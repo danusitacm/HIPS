@@ -1,4 +1,4 @@
-from utils import execute_process,kill_process
+from utils import execute_process,kill_process,file_to_list,search_string_in_file
 import logs
 import subprocess
 import os
@@ -16,7 +16,7 @@ def check_ps():
                 print("Se puso en cuarentena el archivo que ejecutaba el proceso.")
     else:
         print("No se encontro proceso ejecutanse desde /tmp")
-def check_tmp_files():
+def check_tmp_extension():
     try:
         extension_list=[".cpp", ".c", ".exe", ".sh", ".php", ".py"]
         for extension in extension_list:
@@ -30,10 +30,21 @@ def check_tmp_files():
                     logs.log_prevention("Archivo en cuarentena","","Se puso el archivo en cuarentena, ya que era una extension inusual en /tmp")
                     print("Se puso el archivo en cuarentena, ya que era una extension inusual en /tmp")
             else:
-                print("No se encontro ningun archivo sospechoso con extension: ",extension)
+                print("No se encontro ningun archivo con extension: ",extension)
     except Exception as error:
         print('Error al verificar el directorio /tmp: ',error)
-    
-
-check_ps()
-check_tmp_files()
+def check_tmp_script():
+    try:
+        command="find /tmp -type f"
+        file_list=execute_process(command)
+        if(file_list):
+            for file in file_list:
+                if(search_string_in_file(f"{file}","#!")):
+                    print(f"Se encontro que en el archivo {file} con la linea inicial #!.")
+                    subprocess.run(f"mv {os.path.abspath(file)} /hips/cuarentena",shell=True)
+                    print("Se puso el archivo en cuarentena, un script no puede estar en /tmp")
+    except:
+        print('An exception occurred')
+#check_ps()
+#check_tmp_extension()
+check_tmp_script()
