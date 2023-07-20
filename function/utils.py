@@ -12,7 +12,7 @@ def get_files(path):
                 file_paths.append(os.path.join(root, name))
         return file_paths
     except Exception as error:
-        print(f"Error al obtener los archivos del directorio '{path}': {error}")
+        print(f"Error al obtener los archivos del directorio {path}: {error}")
 
 def generate_file_hash(file_path):
     try:
@@ -58,3 +58,9 @@ def search_string_in_file(file_path, search_string):
         return matching_lines
     except Exception as error:
         print("Ocurrió un error al leer el archivo: ",error) 
+
+def kill_process(PID):
+    try:
+        subprocess.run(f"kill -9 {PID}", shell=True)
+    except:
+        print('An exception occurred')
