@@ -16,9 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-import connected_users_verification 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('connected-users/',include("connected_users_verification.urls"))
 ]
