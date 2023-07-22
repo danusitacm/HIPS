@@ -16,8 +16,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -27,10 +27,15 @@ SECRET_KEY = 'django-insecure-p3-yu(6(i1hlp5vq4m2o8xrqmk5r3y3xg(nm-__92d#lxt8@w$
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # Ruta a la carpeta 'static' en la raíz de tu proyecto
+    # Agrega aquí más rutas a otras carpetas de archivos estáticos personalizados
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 ALLOWED_HOSTS = ['*']
-
-
 
 # Application definition
 
@@ -58,7 +63,8 @@ ROOT_URLCONF = 'hips.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [TEMPLATE_DIR,
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
