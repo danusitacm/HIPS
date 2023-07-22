@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Cron encontrados</h1>
+    <br />
+    <table data-toggle="table">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Archivo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cron in crons %}
+            <tr>
+                <td>{{ cron.cron_user }}</td>
+                <td>{{ cron.crontab }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
