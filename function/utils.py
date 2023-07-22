@@ -1,6 +1,6 @@
 import hashlib
 import os
-from  logs import *
+from  function.logs import *
 import subprocess
 
 def get_files(path):
@@ -64,3 +64,13 @@ def kill_process(PID):
         subprocess.run(f"kill -9 {PID}", shell=True)
     except:
         print('An exception occurred')
+        
+def create_dictionary(dicc_struct,output_command):
+    try:
+        for word in output_command:
+            for key in dicc_struct:
+                    dicc_struct[key]=word           
+        return dicc_struct 
+    except Exception as error:
+        print("Error al crear el diccionario: ",error)
+    

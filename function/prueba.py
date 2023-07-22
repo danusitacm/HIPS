@@ -1,7 +1,5 @@
-from django.shortcuts import render
-from user_connected.tables import UserConnectedTable
-from function.utils import execute_process, create_dictionary
-def check_user_connected(request):
+from utils import execute_process, create_dictionary
+def check_user_connected():
     command="w -h | awk '{print $1,$2,$3}'"
     list_user=execute_process(command)
     user_list = []
@@ -15,5 +13,4 @@ def check_user_connected(request):
             'user_ip':user[2],
         }   
         user_list.append(user_dicc)
-    users = UserConnectedTable(user_dicc)
-    return render(request, "user_connected_verifi.html", {'users': user_list})
+check_user_connected()

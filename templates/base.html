@@ -1,4 +1,6 @@
 {% load static %}
+{% load table_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.22.1/dist/bootstrap-table.min.css">
+    <title>Home</title>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet"/>
 </head>
@@ -14,14 +19,18 @@
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
         <div class="border-end bg-white" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-light">Start Bootstrap</div>
+            <div class="sidebar-heading border-bottom bg-light">HIPS</div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Verificar archivos</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/user_connected">Usuarios Conectados</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Sniffers y Promiscuo</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Examinar Logs</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Procesos Consumo Memoria</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Verif. Directorio /tmp</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Controlar Ataque DDOS</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Procesos Consumo Memoria</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Examinar Cron</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Verif. Intentos Accesos</a>
             </div>
         </div>
         <!-- Page content wrapper-->
@@ -29,7 +38,7 @@
             <!-- Top navigation-->
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                 <div class="container-fluid">
-                    <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
+                    <button class="btn btn-primary" id="sidebarToggle">Menu</button>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
