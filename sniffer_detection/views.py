@@ -73,7 +73,6 @@ def check_promiscuous(request):
     }
     values=[]
     if(interface_list):
-        print(interface_list)
         for name in interface_list:
             if(check_net_interface(name)):
                 print(f"La interface {name} se encuentra en modo promiscuo.")
