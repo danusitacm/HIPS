@@ -1,6 +1,5 @@
 import hashlib
 import os
-from  function.logs import *
 import subprocess
 
 def get_files(path):

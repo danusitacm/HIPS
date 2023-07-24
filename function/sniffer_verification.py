@@ -12,13 +12,13 @@ packet_capture_tools = [
     "nethogs",
     "netstat"
 ]
-import subprocess
+
 """ Notas para mi yo 
 Agregar una lista de usuarios y si el usuario ejecuto ese comando enviarlo a la cuarentena ese archivo"""
 def get_sniffer_processes(tool_name):
     try:
         string='{print $1" "$2" "$11""$12}'
-        command = f"sudo ps -uax | grep tcpdump | grep -v grep | awk '{string}'"
+        command = f"sudo ps -uax | grep {tool_name} | grep -v grep | awk '{string}'"
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, text=True)
         output = process.communicate()[0].split("\n")
         output.pop()
@@ -33,6 +33,7 @@ def check_sniffer():
             if result_ps:
                 for process in result_ps:
                     process = process.split()
+                    
                     logs.log_alarm("Sniffer activado","",f"El proceso {process[1]} fue activado por el user {process[0]}")
                     subprocess.run(f"kill -9 {process[1]}", shell=True)
                     logs.log_prevention("Proceso desactivado","",f"El proceso {process[1]} se encuentra en la lista negra, fue desactivado por esta razon.")

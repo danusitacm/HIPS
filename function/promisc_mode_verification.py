@@ -1,6 +1,5 @@
 import subprocess
 import re
-import logs
 from utils import search_string_in_file
 
 def extract_interface(log_line):
@@ -22,12 +21,10 @@ def check_promiscuos_mode():
                 interface_name=extract_interface(line)
                 if(check_net_interface(interface_name)):
                     print(f"La interface {interface_name} se encuentra en modo promiscuo.")
-                    logs.log_alarm("Interfaz modo promiscuo","",f"La interface {interface_name} se encuentra en modo promiscuo.")
+                    print("Interfaz modo promiscuo","",f"La interface {interface_name} se encuentra en modo promiscuo.")
                     subprocess.run(f"ifconfig {interface_name} -promisc", shell=True, check=True)
-                    logs.log_prevention("Modo promiscuo desactivado","",f"Se desactivo la interfaz {interface_name} del modo promiscuo por medida de seguridad.")
+                    print("Modo promiscuo desactivado","",f"Se desactivo la interfaz {interface_name} del modo promiscuo por medida de seguridad.")
                     print(f"Se desactivo la interfaz {interface_name} del modo promiscuo por medida de seguridad.")
-                else:
-                    print("El sistema no entro en modo promiscuo.")
         else:
             print("El sistema no entro en modo promiscuo.")    
     except Exception as error:

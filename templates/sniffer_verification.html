@@ -2,8 +2,16 @@
 
 {% block content %}
 <h1>Opciones</h1>
+<p>Bienvenido a las opciones de verificación de seguridad de red. 
+A continuación, se describen dos acciones que puedes realizar para proteger tu dispositivo y mejorar tu seguridad en línea:</p>
+
 <div class="d-grid gap-2">
+    <h3>Verificación de Sniffers</h3>
+    <p>Asegúrate de que no haya sniffers maliciosos en tu red. Detectaremos y eliminaremos cualquier sniffer sospechoso que pueda comprometer tu privacidad y seguridad.</p>
     <button class="btn btn-primary" type="button" onclick="window.location.href = '/sniffer_detection/check_sniffer/';">Verificar Sniffers</button>
-    <button class="btn btn-primary" type="button" onclick="window.location.href = '/sniffer_detection/check_promiscuous/';">Verificar modo promiscuo</button>
+
+    <h3>Verificación del Modo Promiscuo</h3>
+    <p>Comprueba si tu dispositivo está en modo promiscuo. Si lo está, lo desactivaremos para protegerte de posibles ataques y accesos no autorizados a tus datos.</p>
+    <button class="btn btn-primary" type="button" onclick="window.location.href = '/sniffer_detection/check_promiscuous/';">Verificar Modo Promiscuo</button>
 </div>
 {% endblock %}
