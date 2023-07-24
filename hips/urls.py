@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index, name='index'),
     path('',include('user_connected.urls')),
-    path('',include('cron.urls'))
+    path('',include('cron.urls')),
+    path('',include('sniffer_detection.urls'))
 ]

@@ -5,6 +5,7 @@ def check_user_connected(request):
     list_user=execute_process(command)
     user_list = []
     if(list_user):
+        print(list_user)
         for user in list_user:
             user=user.split()
             if("tty" in user[1]):
@@ -15,6 +16,7 @@ def check_user_connected(request):
                 'user_ip':user[2],
             }   
             user_list.append(user_dicc)
+            
         return render(request, "user_connected_verifi.html", {'users': user_list})
     else:
         message = "No se encontraron usuarios conectados en este momento."
