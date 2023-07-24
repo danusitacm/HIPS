@@ -21,4 +21,4 @@ def check_user_cron(request):
         return render(request, "cron_verification.html", {'crons': values})
     else:
         message = "No se encontraron usuarios conectados en este momento."
-        return render(request, "user_connected_verifi.html", {'message': message})
+        return render(request, "cron_verification.html.html", {'message': message})
