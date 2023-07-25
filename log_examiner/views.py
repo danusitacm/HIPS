@@ -2,7 +2,7 @@ from django.shortcuts import render
 import os
 from function.utils import execute_process
 from django.contrib.auth.decorators import login_required
-
+from function.logs import *
 # Create your views here.
 @login_required
 def log_examiner(request):
@@ -29,6 +29,8 @@ def check_error_404(request):
                     'attemps':repeate_attemps,
                 }
                 values.append(ip_amongus)
+                log_alarm("ERROR 404 repetitivos","",f"Se detecto que la ip {ip} intento muchas veces acceder a la pagina.")
                 block_ip(ip)
+                log_prevention("Se bloqueo la ip","",f"Se bloqueo la ip {ip} por actuar de forma sospechosa.")
     return render(request,"check_error_404.html",{'sussy_ip':values})
 
