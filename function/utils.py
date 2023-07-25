@@ -72,4 +72,10 @@ def create_dictionary(dicc_struct,output_command):
         return dicc_struct 
     except Exception as error:
         print("Error al crear el diccionario: ",error)
-    
+
+def move_file_quarentine(file):
+    result = subprocess.run(f"mv {file} /hips/cuarentena",shell=True)
+    if result.returncode == 0:
+        return 1 
+    else:
+        return 0
