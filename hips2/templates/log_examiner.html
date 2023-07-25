@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-grid gap-2">
+    <h3>Verificar Errores de Carga de Páginas</h3>
+    <p>Realiza una verificación del archivo /var/log/httpd/access.log para detectar posibles errores de carga de páginas en el servidor que resulten en respuestas 404 (No encontrado). En caso de que se detecte una IP que esté repitiendo la solicitud de forma sospechosa, se procederá a bloquear dicha IP para garantizar la seguridad y el buen funcionamiento del servidor.</p>
+    <button class="btn btn-primary" type="button" onclick="window.location.href = '/log_examiner/check_error_404';">Verificar</button>
+</div>
+{% endblock %}

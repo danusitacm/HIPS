@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <h3>Interfaces de red detectadas</h3>
+    {% if interface_status %}
+        <table class="table">          
+            <thead>
+                <tr>
+                    <th>Nombre de la interfaz</th>
+                    <th>Estado de la interfaz</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for status in interface_status %}
+                    <tr>
+                        <td>{{ status.interface_name }}</td>
+                        <td>{{ status.interface_status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>{{ message }}</p>
+    {% endif %}
+</div>
+{% endblock %}
