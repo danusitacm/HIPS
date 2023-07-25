@@ -2,7 +2,7 @@ from django.shortcuts import render
 import subprocess
 from function.utils import execute_process
 from django.contrib.auth.decorators import login_required
-
+from function.logs import *
 
 # Create your views here.
 @login_required
@@ -45,9 +45,9 @@ def check_sniffer(request):
                         'sniffer_command':process[2]
                     }
                     values.append(sniffer_dicc)
-                    print("Sniffer activado","",f"El proceso {process[1]} fue activado por el user {process[0]}")
+                    log_alarm("Sniffer activado","",f"El proceso {process[1]} fue activado por el user {process[0]}")
                     subprocess.run(f"kill -9 {process[1]}", shell=True)
-                    print("Proceso desactivado","",f"El proceso {process[1]} se encuentra en la lista negra, fue desactivado por esta razon.")
+                    log_prevention("Proceso desactivado","",f"El proceso {process[1]} se encuentra en la lista negra, fue desactivado por esta razon.")
         if values:
             return render(request, "check_sniffer_temp.html", {'sniffers': values})
         else: 
@@ -79,11 +79,9 @@ def check_promiscuous(request):
     if(interface_list):
         for name in interface_list:
             if(check_net_interface(name)):
-                print(f"La interface {name} se encuentra en modo promiscuo.")
-                print("Interfaz modo promiscuo","",f"La interface {name} se encuentra en modo promiscuo.")
+                log_alarm("Interfaz modo promiscuo","",f"La interface {name} se encuentra en modo promiscuo.")
                 subprocess.run(f"ifconfig {name} -promisc", shell=True, check=True)
-                print("Modo promiscuo desactivado","",f"Se desactivo la interfaz {name} del modo promiscuo por medida de seguridad.")
-                print(f"Se desactivo la interfaz {name} del modo promiscuo por medida de seguridad.")
+                log_prevention(f"Se desactivo la interfaz {name} del modo promiscuo por medida de seguridad.")
                 interface_status={
                     'interface_name':name,
                     'interface_status':'promiscuo',
