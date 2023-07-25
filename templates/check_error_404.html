@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>Error 404 - Páginas no Encontradas</h3>
+<div>
+    {% if sussy_ip %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Dirección IP del Intruso</th>
+                    <th scope="col">Intentos de Acceso</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ip in sussy_ip %}
+                <tr>
+                    <td>{{ ip.ip_intruser }}</td>
+                    <td>{{ ip.attemps }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No se encontraron registros de errores 404.</p>
+    {% endif %}
+</div>
+{% endblock %}
