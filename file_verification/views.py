@@ -4,6 +4,7 @@ from . import models
 from function.utils import get_files
 from django.contrib.auth.decorators import login_required
 import os,shutil
+from function.logs import *
 @login_required
 def file_verification(request):
     return render(request,"file_verification.html")
@@ -27,6 +28,7 @@ def create_hashes(request):
             file_name=file_name,
             defaults={'hash_value': hash_value}
         )
+    log_prevention("Creacion de hashes","","Se crearon hashes para los archivos binarios y de sistema.")
     success_message = 'Los hashes se han creado y guardado correctamente.'
     return render(request, 'create_hashes.html', {'success_message': success_message})
 
@@ -54,6 +56,7 @@ def check_files(request):
                 file_dicc={
                     'file_path':hash_record.file_name,
                 }
+                log_alarm("File Verification Failure","",f"Se detecto que se modifico el archivo {hash_record.file_name}.")
                 values.append(file_dicc)
     return render(request,"check_files.html",{'files_list': values})
 
@@ -68,8 +71,10 @@ def create_backup(request):
             backup_file_path = "/hips/backup"
             try:
                 shutil.copy(file_path, backup_file_path)
+                
             except Exception as e:
                 error_messages=f"Failed to create backup for. Error: {str(e)}"
     success_messages="Backup created successfully."
+    log_prevention("BackUp realizado","","Se realizo un backup de los archivos /bin y los archivos del sistema /etc/passwd y /etc/shadow.")
     return render(request, 'create_backup.html', {'success_messages': success_messages,
                                                   'error_messages':error_messages,})
