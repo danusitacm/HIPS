@@ -5,7 +5,7 @@ import subprocess
 import os
 import shutil
 from django.contrib.auth.decorators import login_required
-
+from function.logs import *
 @login_required
 # Create your views here.
 def check_tmp_files(request):
@@ -21,7 +21,7 @@ def check_tmp_extension(request):
                 for file_name in quarantine_files:
                         file_path = os.path.join('/tmp', file_name)
                         move_file_quarentine(file_path)
-                        print(f"El archivo {file_name} fue puesto en cuarentena: /hips/cuarentena")
+                        log_prevention("Archivo Cuarentena","",f"El archivo {file_name} fue puesto en cuarentena: /hips/cuarentena por tener extensiones no permitidas")
                 if quarantine_files:
                         quarantined_message = f"Se enviaron {len(quarantine_files)} archivo(s) a cuarentena."
                 else:
@@ -37,7 +37,8 @@ def check_tmp_extension(request):
                                 file_dicc={
                                         'file_name':sussy_file
                                 }
-                                values.append(file_dicc)      
+                                values.append(file_dicc) 
+                                log_alarm("Archivo de extension prohibida","",f"Se encontro que en el archivo {sussy_file} con una extension prohibida en /tmp {extension}.")
         return render(request, "check_tmp_extension.html", {
         'sussy_files': values,
         'quarantined_message': quarantined_message,
@@ -52,7 +53,7 @@ def check_tmp_script(request):
                 for file_name in quarantine_files:
                         file_path = os.path.join('/tmp', file_name)
                         move_file_quarentine(file_path)
-                        print(f"El archivo {file_name} fue puesto en cuarentena: /hips/cuarentena")
+                        log_prevention("Archivo Cuarentena","",f"El archivo {file_name} fue puesto en cuarentena: /hips/cuarentena por ser un script ")
                 if quarantine_files:
                         quarantined_message = f"Se enviaron {len(quarantine_files)} archivo(s) a cuarentena."
                 else:
@@ -63,10 +64,10 @@ def check_tmp_script(request):
         if(file_list):
             for file in file_list:
                 if(search_string_in_file(f"{file}","#!")):
-                        print(f"Se encontro que en el archivo {file} con la linea inicial #!.")
                         scripts={
                                 'file_name':file,
                         }
+                        log_alarm("Archivo Script en TMP","",f"Se encontro que en el archivo {file} con la linea inicial #!.")
                         values.append(scripts)
         return render(request, "check_tmp_script.html", {
         'scripts': values,
