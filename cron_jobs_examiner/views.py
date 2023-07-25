@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from function.utils import execute_process, create_dictionary
+from function.utils import execute_process
 from django.contrib.auth.decorators import login_required
+from function.logs import *
 @login_required
 def check_user_cron(request):
     command_getuser="cat /etc/passwd | awk -F : '{print $1}'"
@@ -19,6 +20,8 @@ def check_user_cron(request):
                         'cron_file':cron[6],
                     }   
                     values.append(cron_dicc)
+                    log_alarm(f"Archivo cron","",f"Se detecto que el user {user} esta ejecutando el archivo {cron[6]} como cron.")
+
         return render(request, "cron_verification.html", {'crons': values})
     else:
         message = "No se encontraron usuarios conectados en este momento."
