@@ -1,8 +1,0 @@
-asgiref
-Django
-pi
-psycopg2-binary
-python-dotenv
-sqlparse
-typing_extensions
-django-datatable
