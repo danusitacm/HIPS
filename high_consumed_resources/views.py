@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from function.utils import execute_process, kill_process
 from django.contrib.auth.decorators import login_required
-
+from function.logs import *
 # Create your views here.
 @login_required
 def high_consumed_resources(request):
@@ -34,11 +34,12 @@ def check_ram(request):
         }
         if (process[2]>="00:03:00"  and not (process[0] in pid_list)):
             values.append(process_dicc)
-            #logs.log_prevention("Matar proceso","",f"Se mato el proceso de PID {process[0]} por ejecutarse en mucho tiempo")
+            log_alarm("Consumo masivo de recursos", "", "Se detectó que un proceso se ejecutó durante un largo período de tiempo y utilizó una gran cantidad de memoria RAM.")
+            log_prevention("Matar proceso", "", f"Se terminó el proceso de PID {process[0]} debido a que se ejecutó durante un tiempo prolongado y consumió muchos recursos.")
         if(process[1]>="80.0"  and not (process[0] in pid_list)):
             values.append(process_dicc)
-            #logs.log_alarm("Consumo masivo de recursos","",f"Se detecto que un proceso tiene un porcentaje {process[2]} en el recurso { resource }" )
-            #logs.log_prevention("Matar proceso","",f"Se mato el proceso de PID {process[0]} por el excesivo uso de la { resource }")
+            log_alarm("Consumo masivo de recursos","",f"Se detecto que un proceso tiene un porcentaje {process[1]} de uso alto en la memoria ram" )
+            log_prevention("Matar proceso","",f"Se mato el proceso de PID {process[0]} por el excesivo uso de la ram")
     return render(request,"check_ram.html",{
         'processes':values,
         'kill_process_message': kill_process_message,})
@@ -69,11 +70,12 @@ def check_cpu(request):
         }
         if (process[2]>="00:03:00" and not (process[0] in pid_list)):
             values.append(process_dicc)
-            #logs.log_prevention("Matar proceso","",f"Se mato el proceso de PID {process[0]} por ejecutarse en mucho tiempo")
+            log_alarm("Consumo masivo de recursos", "", "Se detectó que un proceso se ejecutó durante un largo período de tiempo y utilizó una gran cantidad CPU.")
+            log_prevention("Matar proceso","",f"Se mato el proceso de PID {process[0]} por ejecutarse en mucho tiempo")
         if(process[1]>="80.0" and not (process[0] in pid_list)):
             values.append(process_dicc)
-            #logs.log_alarm("Consumo masivo de recursos","",f"Se detecto que un proceso tiene un porcentaje {process[2]} en el recurso { resource }" )
-            #logs.log_prevention("Matar proceso","",f"Se mato el proceso de PID {process[0]} por el excesivo uso de la { resource }")
+            log_alarm("Consumo masivo de recursos","",f"Se detecto que un proceso tiene un porcentaje {process[1]} alto de uso de CPU." )
+            log_prevention("Matar proceso","",f"Se mato el proceso de PID {process[0]} por el excesivo uso de la CPU.")
     return render(request,"check_cpu.html",{
         'processes':values,
         'kill_process_message': kill_process_message,})
