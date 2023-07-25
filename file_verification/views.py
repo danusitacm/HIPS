@@ -17,17 +17,18 @@ def create_hashes(request):
     files_to_hash.append('/etc/shadow')
     for file_name in files_to_hash:
         # Leer el contenido del archivo
-        with open(file_name, 'rb') as file:
-            file_contents = file.read()
+        if os.path.isfile(file_name):
+            with open(file_name, 'rb') as file:
+                file_contents = file.read()
 
-        # Crear el hash MD5 del contenido del archivo
-        hash_value=hashlib.sha256(file_contents).hexdigest()
+            # Crear el hash MD5 del contenido del archivo
+            hash_value=hashlib.sha256(file_contents).hexdigest()
 
-        # Guardar el hash en la base de datos
-        hash_record, created = models.HashRecord.objects.update_or_create(
-            file_name=file_name,
-            defaults={'hash_value': hash_value}
-        )
+            # Guardar el hash en la base de datos
+            hash_record, created = models.HashRecord.objects.update_or_create(
+                file_name=file_name,
+                defaults={'hash_value': hash_value}
+            )
     log_prevention("Creacion de hashes","","Se crearon hashes para los archivos binarios y de sistema.")
     success_message = 'Los hashes se han creado y guardado correctamente.'
     return render(request, 'create_hashes.html', {'success_message': success_message})
