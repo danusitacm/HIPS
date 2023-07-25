@@ -2,12 +2,7 @@
 
 {% block content %}
 <h1>Opciones de Seguridad</h1>
-
 <div class="d-grid gap-2">
-    <h3>Verificación de procesos en /tmp</h3>
-    <p>Comprueba si hay procesos en ejecución desde el directorio /tmp, que es una ubicación común para archivos temporales. </p>
-    <button class="btn btn-primary" type="button" onclick="window.location.href = '/tmp_directory_check/check_temp_ps';">Realizar Verificación</button>
-
     <h3>Verificación de extensiones dudosas en /tmp</h3>
     <p>Verifica las extensiones de archivos almacenados en el directorio /tmp mediante una lista negra de extensiones potencialmente peligrosas. Esta revisión ayudará a identificar y eliminar archivos con extensiones sospechosas que podrían representar una amenaza para la seguridad.</p>
     <button class="btn btn-primary" type="button" onclick="window.location.href = '/tmp_directory_check/check_tmp_extension';">Realizar Verificación</button>
