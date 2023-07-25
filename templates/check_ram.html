@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>
+        <h1>Procesos con Alto Consumo de Memoria</h1>
+        <h3>Detectando procesos con alto consumo de memoria</h3>
+        <p>Aquí se muestran los procesos que han estado en ejecución durante más de 3 minutos o que consumen más del 80% de la memoria disponible. Estos procesos pueden afectar el rendimiento y estabilidad del sistema.</p>
+        {% if kill_process_message %}
+        <div class="alert alert-success" role="alert">
+            {{ kill_process_message }}
+        </div>
+        {% endif %}
+            <form method="post">
+            {% csrf_token %}
+                {% if processes %}
+                    <table class=table>
+                        <thead>
+                            <tr>
+                                <th>PID</th>
+                                <th>Consumo de Memoria(%)</th>
+                                <th>Tiempo de Ejecucion</th>
+                                <th>Comando</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for process in processes %}
+                                <tr>
+                                    <td>{{ process.processes_pid }}</td>
+                                    <td>{{ process.processes_pmem }}</td>
+                                    <td>{{ process.processes_time }}</td>
+                                    <td>{{ process.processes_comm }}</td>
+                                    <td><input class="form-check-input" type="checkbox" name="pid_list" value="{{  process.processes_pid }}"></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary">Detener proceso</button>
+                {% else %}
+                    No se encontraron procesos que estuvieran consumiendo masivamente la ram.
+                {% endif %}
+            </form>
+    </div>
+{% endblock %}

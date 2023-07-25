@@ -25,5 +25,6 @@ urlpatterns = [
     path('',include('cron_jobs_examiner.urls')),
     path('',include('sniffer_detection.urls')),
     path('',include('mail_queue_checker.urls')),
-    path('',include('tmp_directory_checker.urls'))
+    path('',include('tmp_directory_checker.urls')),
+    path('',include('high_consumed_resources.urls'))
 ]
