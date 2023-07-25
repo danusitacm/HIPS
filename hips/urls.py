@@ -21,6 +21,7 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index, name='index'),
+    path('',include('file_verification.urls')),
     path('',include('user_connected.urls')),
     path('',include('cron_jobs_examiner.urls')),
     path('',include('sniffer_detection.urls')),

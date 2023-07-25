@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Opciones</h1>
+<p>
+</p>
+
+<div class="d-grid gap-2">
+    <h3>Crear hashes</h3>
+    <p>Crea los hashes y los guarda en la base de datosc </p>
+    <button class="btn btn-primary" type="button" onclick="window.location.href='/file_verification/create_hashes';">Crear hashes</button>
+    <h3>Verificar modificion en archivos</h3>
+    <p>Verifica si se modificaron los archivos.</p>
+    <button class="btn btn-primary" type="button" onclick="window.location.href='/file_verification/check_files';">Verificar modificacion</button>
+</div>
+{% endblock %}

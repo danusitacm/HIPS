@@ -33,7 +33,6 @@ def write_to_file(file_path, text):
 def execute_process(command):
     p=subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,text=True,stderr=subprocess.PIPE)
     output, outerr =p.communicate()
-    print(outerr)
     output=output.split("\n")
     output.pop()
     return output

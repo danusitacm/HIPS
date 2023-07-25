@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Archivos Modificados Detectados</h1>
+<div>
+    {% if files_list %}
+        <table class=table>
+            <thead>
+                <tr>
+                    <th scope="col">Archivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files_list %}
+                <tr>
+                    <td>{{ file.file_path }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No se encontraron archivos modificados</p>
+    {% endif %}
+</div>
+{% endblock %}
