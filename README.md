@@ -22,7 +22,7 @@ yum update
 yum install net-tools
 yum install postgresql-server
 ```
-### Descargar el repo
+### Descargar el repositorio remoto
 Descargar el repositorio en directorio raiz /
 ```console
 git clone https://github.com/danusitacm/hips.git
@@ -63,7 +63,7 @@ BD_HOST="Ip de la base de datos"
 chmod 700 .env
 ```
 ### Usuario
-Comunicarse con el desarrollador para que le proporcione la constraña y para el usuario root del hips.
+Comunicarse con el desarrollador para que le proporcione la contraseña y para el usuario root del hips.
 ## Manual de Uso
 Ejecutar el comando para poder encender el servidor en el puerto 80
 ```console
