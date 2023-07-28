@@ -10,6 +10,14 @@ def sniffer_detection(request):
     return render(request, "sniffer_verification.html")
 # ------------------- CHECK SNIFFER ------------------------------------------------
 def get_sniffer_processes(tool_name):
+    """
+    Obtiene los procesos de un sniffer específico en el sistema.
+
+    Args:
+        tool_name : El nombre del sniffer para buscar en los procesos del sistema.
+
+    Returns:
+        list: Una lista que contiene información de los procesos encontrados del sniffer específico."""
     try:
         command = "sudo ps -uax | grep "+tool_name+" | grep -v grep | awk \'{print $1\" \"$2\" \"$11\"\"$12}\'"
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, text=True)
@@ -20,6 +28,15 @@ def get_sniffer_processes(tool_name):
         print("Error al ejecutar el comando ps: ", error)
 @login_required   
 def check_sniffer(request):
+    """   
+    Verifica y desactiva posibles sniffers activos en el sistema.
+
+    Args:
+        request: La solicitud HTTP enviada por el usuario.
+
+    Returns:
+        Si se encuentran sniffers activos, muestra la información de los procesos relacionados con los sniffers en una página web.
+        Si no se encuentran sniffers activos, muestra un mensaje en la página web indicando que no se encontraron sniffers en ejecución."""
     try:
         values=[]
         packet_capture_tools = [
@@ -59,6 +76,17 @@ def check_sniffer(request):
 # --------------------------- CHECK PROMISCUO -------------------------------------------
 
 def check_net_interface(interface_name):
+    """ 
+    Verifica si una interfaz de red está en modo promiscuo.
+
+    Args:
+        interface_name : El nombre de la interfaz de red que se desea verificar.
+
+    Returns:
+       Un valor entero que indica si la interfaz está en modo promiscuo.
+            - Si la interfaz está en modo promiscuo, devuelve 1.
+            - Si la interfaz NO está en modo promiscuo, devuelve 0.
+    """
     command_interface=f"ip a show {interface_name} | grep -i promisc"
     ps=subprocess.Popen(command_interface,shell=True,stdout=subprocess.PIPE,text=True)
     output=ps.communicate()[0]
@@ -67,7 +95,17 @@ def check_net_interface(interface_name):
     else:
         return 0
 @login_required
-def check_promiscuous(request):     
+def check_promiscuous(request):
+    """
+    Verifica y desactiva interfaces de red en modo promiscuo en el sistema.
+
+    Args:
+        request: La solicitud HTTP enviada por el usuario.
+
+    Returns:
+        Si se encuentran interfaces en modo promiscuo, muestra la información de las interfaces y las desactiva por seguridad.
+        Si no se encuentran interfaces en modo promiscuo, muestra un mensaje en la página web indicando que el dispositivo no está en modo promiscuo.
+    """     
     command="grep -i \"entered promiscuous mode\" /var/log/messages | awk '{print $7}'"
     interface_list=execute_process(command)
     interface_list=list(set(interface_list))

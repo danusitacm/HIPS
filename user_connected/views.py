@@ -3,6 +3,15 @@ from function.utils import execute_process
 from django.contrib.auth.decorators import login_required
 @login_required
 def check_user_connected(request):
+    """
+    Verifica y muestra la lista de usuarios actualmente conectados al sistema.
+
+    Args:
+        request: La solicitud HTTP enviada por el usuario.
+
+    Returns:
+        Renderiza la página web "user_connected_verifi.html" con la información de los usuarios conectados.
+    """
     command="w -h | awk '{print $1,$2,$3}'"
     list_user=execute_process(command)
     user_list = []

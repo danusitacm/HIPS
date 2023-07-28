@@ -3,17 +3,30 @@ import os
 from function.utils import execute_process
 from django.contrib.auth.decorators import login_required
 from function.logs import *
-# Create your views here.
+
 @login_required
 def log_examiner(request):
     return render(request,"log_examiner.html")
 
 def block_ip(ip):
+    """Funcion que bloquea ip
+
+    Args:
+        ip : direccion de ip a bloquear
+    """
     command=f"route add -host {ip} reject"
     execute_process(command)
 
 @login_required
 def check_error_404(request):
+    """Funcion que verifica los errores de acceso a una pagina web e identifica si una ip se repitio mas de 3 veces 
+
+    Args:
+        request : La solicitud HTTP enviada por el usuario.
+
+    Returns:
+        Retorna las ip que se repitieron mas de 3 veces en el log y luego las bloquea
+    """
     values=[]
     command="cat /var/log/httpd/acces.log | grep \"404\" | awk '{print $1}'"
     ip_list=execute_process(command)

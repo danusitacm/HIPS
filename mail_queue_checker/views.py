@@ -5,6 +5,16 @@ from function.logs import *
 # Create your views here.
 @login_required
 def check_queue_email_view(request):
+    """Funciona la cola de emails si supera mas de 100 alerta al usuario
+
+    Args:
+        request : La solicitud HTTP enviada por el usuario.
+
+    Returns:
+        Retorna un mensaje 
+        Si la cola de mails sobrepasa los 100 retorna un mensaje de alerta 
+        Si la cola de mails esta vacia retorna un mensaje de que esta vacia.
+    """
     try:
         command_email = "mailq"
         output = execute_process(command_email)

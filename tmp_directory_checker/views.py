@@ -13,6 +13,15 @@ def check_tmp_files(request):
 
 @login_required
 def check_tmp_extension(request):
+        """
+        Verifica y pone en cuarentena archivos con extensiones no permitidas en el directorio /tmp.
+
+        Args:
+                request: La solicitud HTTP enviada por el usuario.
+
+        Returns:
+                Renderiza la página web "check_tmp_extension.html" con la información de los archivos sospechosos y un mensaje de cuarentena.
+        """
         print("ACA ESTA EL REQUEST",request)
         values=[]
         extension_list=[".cpp", ".c", ".exe", ".sh", ".php", ".py"]
@@ -45,7 +54,15 @@ def check_tmp_extension(request):
         })
 @login_required
 def check_tmp_script(request):
+        """
+        Verifica y pone en cuarentena archivos de script presentes en el directorio /tmp.
 
+        Args:
+                request: La solicitud HTTP enviada por el usuario.
+
+        Returns:
+                Renderiza la página web "check_tmp_script.html" con la información de los archivos de script sospechosos y un mensaje de cuarentena.
+        """
         command="find /tmp -type f"
         values=[]
         if request.method == 'POST':

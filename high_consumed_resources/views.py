@@ -9,6 +9,14 @@ def high_consumed_resources(request):
     return render(request,"high_consumed_resources.html")
 @login_required
 def check_ram(request):
+    """Funcion que verifica los procesos que consumen alto porcentaje de ram o si utilizan mucho tiempo la ram 
+
+    Args:
+        request La solicitud HTTP enviada por el usuario.
+
+    Returns:
+        Retorna la lista de procesos que consumen un 80% o se ejecuto ms de 3 minutos
+    """
     pid_list=[]
     if request.method == 'POST':
         pid_list = request.POST.getlist('pid_list')
@@ -45,6 +53,14 @@ def check_ram(request):
         'kill_process_message': kill_process_message,})
 @login_required
 def check_cpu(request):
+    """Funcion que verifica los procesos que consumen alto porcentaje de cpu o si utilizan mucho tiempo la cpu 
+
+    Args:
+        request La solicitud HTTP enviada por el usuario.
+
+    Returns:
+        Retorna la lista de procesos que consumen un 80% o se ejecuto mas de 3 minutos
+    """
     pid_list=[]
     if request.method == 'POST':
         pid_list = request.POST.getlist('pid_list')
